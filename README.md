@@ -237,8 +237,8 @@ npx tsc --noEmit
 
 ### 아이콘 추가
 
-SVG 아이콘을 React 컴포넌트로 변환:
-
+1. SVG 파일을 client\src\assets\icons 에 추가한다.
+2. React 컴포넌트로 변환한다.
 ```bash
 npm run svgr
 ```
@@ -252,7 +252,7 @@ npm run svgr
 | 변수, 함수, 훅           | camelCase                      |
 | 아이디, 클래스명         | camelCase                      |
 | 에셋                     | snake_case                     |
-| 아이콘                   | icon*아이콘명*바리에이션\_컬러 |
+| 아이콘                   | icon_아이콘명_바리에이션_컬러 |
 | 타입명                   | PascalCase                     |
 
 ### 컴포넌트 개발
@@ -263,7 +263,7 @@ npm run svgr
 ### 스타일링 규칙
 
 - **전역 SCSS**: `src/assets/styles/abstracts/`의 변수, 믹스인, 함수는 개별적으로 불러오지 않아도 자동으로 사용
-- **컴포넌트 SCSS 모듈**: 공통 컴포넌트 스타일은 SCSS MODULE을 사용
+- **컴포넌트 SCSS 모듈 / tailwind css**: common 공통 컴포넌트는 SCSS MODULE, 그 외에는 가급적 tailwind css를 사용한다.
 - **인라인 스타일 지양**: 불가피한 경우를 제외하고 피할 것
 
 #### z-index

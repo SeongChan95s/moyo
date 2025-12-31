@@ -99,7 +99,7 @@ router.post('/naver', async (req: Request, res: Response) => {
 				}
 			}
 
-			// Custom Token 생성 (claims는 커스텀 클레임용)
+			// Custom Token 생성
 			const customToken = await admin.auth().createCustomToken(uid, {
 				provider: 'naver'
 			});
