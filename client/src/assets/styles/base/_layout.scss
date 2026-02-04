@@ -2,13 +2,13 @@
 body {
 	width: 100%;
 	user-select: none;
-	background-color: var(--white-color);
 }
 
 .wrapper {
 	display: flex;
 	flex-direction: column;
 	min-height: 100svh;
+	background-color: var(--color-white);
 	@include layout-width;
 }
 

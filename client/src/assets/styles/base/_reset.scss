@@ -5,6 +5,12 @@
 ====== */
 
 @layer base {
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
 	body {
 		height: 100%;
 	}
@@ -16,6 +22,8 @@
 	h5,
 	h6,
 	p {
+		font-size: inherit;
+		font-weight: inherit;
 		overflow-wrap: break-word;
 	}
 
@@ -29,6 +37,7 @@
 	a,
 	button,
 	.clickTg {
+		cursor: pointer;
 		touch-action: manipulation;
 		-webkit-tap-highlight-color: transparent;
 
@@ -68,8 +77,14 @@
 		background: inherit;
 		box-shadow: none;
 		border-radius: 0;
-		cursor: pointer;
 		color: inherit;
+	}
+
+	button,
+	input,
+	select,
+	textarea {
+		font: inherit;
 	}
 
 	canvas,
@@ -84,6 +99,9 @@
 	/* IE10 이상에서 input box 에 추가된 지우기 버튼 제거 */
 	// input::-ms-clear { display: none; }
 
+	input {
+		min-width: 0px;
+	}
 	// input number
 	input[type='number']::-webkit-inner-spin-button,
 	input[type='number']::-webkit-outer-spin-button {
@@ -96,12 +114,12 @@
 		appearance: textfield;
 		-moz-appearance: textfield; // firefox
 	}
-}
 
-input[type='date']::-webkit-calendar-picker-indicator,
-input[type='time']::-webkit-calendar-picker-indicator,
-input[type='month']::-webkit-calendar-picker-indicator,
-input[type='week']::-webkit-calendar-picker-indicator,
-input[type='datetime-local']::-webkit-calendar-picker-indicator {
-	display: none;
+	input[type='date']::-webkit-calendar-picker-indicator,
+	input[type='time']::-webkit-calendar-picker-indicator,
+	input[type='month']::-webkit-calendar-picker-indicator,
+	input[type='week']::-webkit-calendar-picker-indicator,
+	input[type='datetime-local']::-webkit-calendar-picker-indicator {
+		display: none;
+	}
 }

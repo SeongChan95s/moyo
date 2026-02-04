@@ -19,7 +19,7 @@ export default function EmailLoginPage() {
 
 	const {
 		register,
-		formState: { errors, isSubmitting },
+		formState: { errors, isSubmitting, isValid },
 		handleSubmit
 	} = useForm<LoginInput>({
 		resolver: zodResolver(loginInputSchema)
@@ -48,7 +48,7 @@ export default function EmailLoginPage() {
 			<Helmet>
 				<title>이메일 로그인</title>
 			</Helmet>
-			<main className="login-page mt-25 inner">
+			<main className="login-page mt-20 inner">
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<ul>
 						<li>
@@ -61,11 +61,11 @@ export default function EmailLoginPage() {
 								fill
 							/>
 						</li>
-						<li className="mt-18">
+						<li className="mt-32">
 							<TextField
 								type="password"
 								label="비밀번호"
-								placeholder="영문 숫자 조합 8자리 이상"
+								placeholder="8자 이상의 비밀번호"
 								size="lg"
 								{...register('password')}
 								error={errors.password?.message}
@@ -74,14 +74,15 @@ export default function EmailLoginPage() {
 						</li>
 					</ul>
 
-					<div className="button-wrap mt-24">
-						<Button type="submit" color="primary" fill>
+					<div className="button-wrap mt-56">
+						<Button size="lg" type="submit" color="primary" fill disabled={!isValid}>
 							{isSubmitting ? <Spinner size="xs" /> : '로그인'}
 						</Button>
-						<div className="flex gap-14 justify-between mt-15 text-label-2 text-gray-500">
-							<Link to="/auth/register/agree">회원가입</Link>
-							<Link to="#none">비밀번호 찾기</Link>
-						</div>
+						<Link
+							to="/auth/find/password"
+							className="block w-fit mt-25 mr-auto ml-auto text-[12px] text-gray-700">
+							비밀번호 찾기
+						</Link>
 					</div>
 				</form>
 			</main>

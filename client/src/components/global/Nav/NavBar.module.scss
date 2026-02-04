@@ -2,7 +2,7 @@
 	position: relative;
 	box-sizing: content-box;
 	width: 100%;
-	height: 3rem;
+	height: 3.75rem;
 	padding-top: ios-safe-area(top);
 	z-index: var(--z-nav-bar);
 
@@ -45,9 +45,12 @@
 			overflow: hidden;
 
 			h2 {
-				font-size: 0.9063rem;
-				font-weight: 500;
+				width: fit-content;
+				margin: 0 auto;
+				font-size: 14px;
+				font-weight: 700;
 				line-height: 1;
+				color: var(--color-gray-900);
 				white-space: nowrap;
 				cursor: pointer;
 				text-overflow: unset;
@@ -62,7 +65,7 @@
 
 		&:not(:has(+ .quick-menu)) .title-box {
 			text-align: center;
-			text-indent: -2.375rem;
+			text-indent: -2.25rem;
 		}
 
 		@keyframes marquee {
