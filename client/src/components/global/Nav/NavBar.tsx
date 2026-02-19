@@ -140,7 +140,7 @@ export default function NavBar() {
 							<IconButton
 								className={styles.backButton}
 								icon={<IconArrowStick />}
-								size="lg"
+								size="md"
 								onClick={() => navigate(-1)}
 							/>
 						)}

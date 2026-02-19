@@ -22,7 +22,7 @@ import { requiredUserDBschema } from '@/schemas/auth';
 import { omit } from 'lodash';
 
 /**
- * 이메일 회원가입 정보입력
+ * 이메일 회원가입 시, firebase 프로필 정보 업데이트
  */
 export const registerAuth = async ({
 	email,

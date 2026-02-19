@@ -5,7 +5,7 @@ import { classNames } from '../../../utils/classNames';
 
 interface CheckboxProps {
 	className?: string;
-	variant?: 'standard' | 'box';
+	variant?: 'standard' | 'box' | 'transparent';
 	icon?: 'rounded' | 'round';
 	name?: string;
 	value?: string;
@@ -49,9 +49,10 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
 
 	return (
 		<label className={className}>
-			{variant == 'standard' && (
+			{(variant == 'standard' || variant == 'transparent') && (
 				<div className={styles.iconWrap}>
 					<IconCheck size="fill" className={`${styles.icon} icon`} />
+					<IconCheck size="fill" className={`${styles.iconBg}`} />
 				</div>
 			)}
 

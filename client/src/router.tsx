@@ -17,6 +17,9 @@ import NaverRedirectPage from './pages/auth/oauth/NaverRedirectPage';
 import LoginPage from './pages/auth/login/LoginPage';
 import EmailLoginPage from './pages/auth/login/EmailLoginPage';
 import CenterLayout from './layouts/CenterLayout';
+import ServiceTerms from './pages/auth/terms/ServiceTerms';
+import PrivacyTerms from './pages/auth/terms/PrivacyTerms';
+import FindPasswordPage from './pages/auth/find/FindPasswordPage';
 
 const ComponentGuidePage = lazy(() => import('./pages/guide/common/ComponentGuidePage'));
 const PopupGuidePage = lazy(() => import('./pages/guide/common/PopupGuidePage'));
@@ -53,12 +56,12 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: 'login',
+				element: <LoginPage />
+			},
+			{
+				path: 'login',
 				element: <SubLayout />,
 				children: [
-					{
-						path: '',
-						element: <LoginPage />
-					},
 					{
 						path: 'email',
 						element: <EmailLoginPage />
@@ -76,6 +79,14 @@ const router = createBrowserRouter([
 					{
 						path: 'join',
 						element: <JoinPage />
+					},
+					{
+						path: 'service-terms',
+						element: <ServiceTerms />
+					},
+					{
+						path: 'privacy-terms',
+						element: <PrivacyTerms />
 					}
 				]
 			},
@@ -90,6 +101,16 @@ const router = createBrowserRouter([
 					{
 						path: 'naver/callback',
 						element: <NaverRedirectPage />
+					}
+				]
+			},
+			{
+				path: 'find',
+				element: <SubLayout />,
+				children: [
+					{
+						path: 'password',
+						element: <FindPasswordPage />
 					}
 				]
 			}

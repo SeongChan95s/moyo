@@ -3,7 +3,7 @@ import { regDisplayName, regNumber, regPassword } from '../constants/regex';
 import { Timestamp } from 'firebase/firestore';
 
 const email = z.email('이메일 형식이 아닙니다');
-const password = z.string().regex(regPassword, '영문 숫자 조합 8자리 이상');
+const password = z.string().regex(regPassword, '영문, 숫자, 특수문자 조합 8자리 이상');
 const displayName = z
 	.string()
 	.min(2, '2자 이상')
@@ -19,7 +19,7 @@ export const registerJoinInputSchema = z
 	.object({
 		email,
 		password,
-		passwordConfirm: password,
+		passwordConfirm: z.string(),
 		displayName
 	})
 	.refine(data => data.password == data.passwordConfirm, {
