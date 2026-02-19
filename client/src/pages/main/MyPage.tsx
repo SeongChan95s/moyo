@@ -8,6 +8,7 @@ export default function MyPage() {
 	const login = useLogin();
 
 	const user = useUserState(state => state.user);
+	const data = useUserState(state => state.data);
 
 	const logout = async () => {
 		const auth = getAuth();
@@ -20,7 +21,12 @@ export default function MyPage() {
 				<title>모요(Moyo) - 마이</title>
 			</Helmet>
 			<div className="my-page">
-				<div>{user?.displayName} 님 로그인을 환영합니다.</div>
+				{user && data && (
+					<p>
+						{user.displayName} #{data.tag} 님 로그인을 환영합니다.
+					</p>
+				)}
+
 				{user ? (
 					<Button onClick={logout}>로그아웃</Button>
 				) : (

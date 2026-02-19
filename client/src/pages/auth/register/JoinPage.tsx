@@ -63,7 +63,7 @@ function STEP01({
 			const signInMethods = await fetchSignInMethodsForEmail(auth, watchedEmail);
 			if (signInMethods.length > 0) {
 				setError?.('email', {
-					message: '이미 존재하는 이메일입니다.'
+					message: '이미 가입된 이메일 입니다.'
 				});
 				return;
 			}

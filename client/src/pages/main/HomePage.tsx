@@ -5,7 +5,7 @@ export default function HomePage() {
 	return (
 		<>
 			<Helmet>
-				<title>파티 스케줄러 - 홈</title>
+				<title>모요 - 홈</title>
 				<meta name="description" content="파티 일정을 쉽게 관리하세요" />
 			</Helmet>
 			<div className="home-page">

@@ -86,7 +86,7 @@ export default function LoginPage() {
 
 					<div className="flex justify-center gap-4 mt-45 text-gray-500">
 						<p className="text-[14px]">로그인에 어려움이 있나요?</p>
-						<TextButton className="pt-2 pr-8 pb-2 pl-8 border-[0.5px] border-gray-300 rounded-full text-[11px] leading-1">
+						<TextButton className="pt-2 pr-8 pb-2 pl-8 border border-gray-300 rounded-full text-[11px] leading-1">
 							<IconKakao className="w-15 h-15 fill-gray-500" />
 							문의하기
 						</TextButton>

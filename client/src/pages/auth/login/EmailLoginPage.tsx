@@ -20,6 +20,7 @@ export default function EmailLoginPage() {
 	const {
 		register,
 		formState: { errors, isSubmitting, isValid },
+		setError,
 		handleSubmit
 	} = useForm<LoginInput>({
 		resolver: zodResolver(loginInputSchema)
@@ -35,9 +36,21 @@ export default function EmailLoginPage() {
 			navigate(callbackStorage.get() ?? '/');
 		} catch (error) {
 			if (error instanceof FirebaseError) {
-				useGlobalToastStore.getState().push({
-					message: handleFirebaseAuthErrorMessage(error)
-				});
+				if (error.code == 'auth/user-not-found') {
+					setError('email', {
+						message: handleFirebaseAuthErrorMessage(error)
+					});
+				}
+
+				if (error.code == 'auth/wrong-password') {
+					setError('password', {
+						message: handleFirebaseAuthErrorMessage(error)
+					});
+				}
+
+				// useGlobalToastStore.getState().push({
+				// 	message: handleFirebaseAuthErrorMessage(error)
+				// });
 			}
 			if (error instanceof Error) throw error;
 		}

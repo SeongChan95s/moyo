@@ -6,7 +6,7 @@ import type { FirebaseError } from 'firebase/app';
 export const handleFirebaseAuthErrorMessage = (error: FirebaseError): string => {
 	switch (error.code) {
 		case 'auth/user-not-found':
-			return '등록되지 않은 이메일입니다.';
+			return '가입되지 않은 이메일입니다.';
 		case 'auth/wrong-password':
 			return '비밀번호가 일치하지 않습니다.';
 		case 'auth/invalid-email':

@@ -42,7 +42,7 @@ export default function AgreePage() {
 					</div>
 
 					<div className="checkbox-wrap pl-18 pr-18 mt-20">
-						<div className="checkbox-wrap-top border-[0.5px] border-gray-200 rounded-md">
+						<div className="checkbox-wrap-top border border-gray-200 rounded-md">
 							<div className="pt-16 pr-16 pb-16 pl-16">
 								<Checkbox
 									className="text-[16px] font-semibold text-gray-700"
@@ -78,7 +78,7 @@ export default function AgreePage() {
 									</Checkbox>
 									<Link
 										to="/auth/register/service-terms"
-										className="h-23 flex justify-center items-center pr-6 pl-8 text-[12px] text-gray-400 border-[0.5px] border-gray-200 rounded-[5px]">
+										className="h-23 flex justify-center items-center pr-6 pl-8 text-[12px] text-gray-400 border border-gray-200 rounded-[5px]">
 										약관 보기 &gt;
 									</Link>
 								</li>
@@ -94,7 +94,7 @@ export default function AgreePage() {
 									</Checkbox>
 									<Link
 										to="/auth/register/privacy-terms"
-										className="h-23 flex justify-center items-center pr-6 pl-8 text-[12px] text-gray-400 border-[0.5px] border-gray-200 rounded-[5px]">
+										className="h-23 flex justify-center items-center pr-6 pl-8 text-[12px] text-gray-400 border border-gray-200 rounded-[5px]">
 										약관 보기 &gt;
 									</Link>
 								</li>
