@@ -38,7 +38,6 @@ export const requiredUserDBschema = z.object({
 		.object({
 			all: z.boolean().default(false),
 			invited: z.boolean().default(false),
-			party: z.boolean().default(false),
 			board: z.boolean().default(false),
 			comment: z.boolean().default(false),
 			service: z.boolean().default(false)
@@ -46,7 +45,6 @@ export const requiredUserDBschema = z.object({
 		.default({
 			all: false,
 			invited: false,
-			party: false,
 			board: false,
 			comment: false,
 			service: false

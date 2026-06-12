@@ -1,25 +1,22 @@
 import { lazy } from 'react';
-import HomePage from './pages/main/HomePage';
-import PartyPage from './pages/main/PartyPage';
 import NotFoundPage from './pages/NotFoundPage';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import GuideLayout from './layouts/GuideLayout';
 import MainLayout from './layouts/MainLayout';
 import SubLayout from './layouts/SubLayout';
+import CenterLayout from './layouts/CenterLayout';
 import JoinPage from './pages/auth/register/JoinPage';
 import AgreePage from './pages/auth/register/AgreePage';
 import MyPage from './pages/main/MyPage';
 import { AuthMiddleware } from './middleware/AuthMiddleware';
-import ChatPage from './pages/main/ChatPage';
-import SelectSchedulePage from './pages/party/SelectSchedule';
 import KakaoRedirectPage from './pages/auth/oauth/KakaoRedirectPage';
 import NaverRedirectPage from './pages/auth/oauth/NaverRedirectPage';
 import LoginPage from './pages/auth/login/LoginPage';
 import EmailLoginPage from './pages/auth/login/EmailLoginPage';
-import CenterLayout from './layouts/CenterLayout';
 import ServiceTerms from './pages/auth/terms/ServiceTerms';
 import PrivacyTerms from './pages/auth/terms/PrivacyTerms';
 import FindPasswordPage from './pages/auth/find/FindPasswordPage';
+import { LoginMiddleware } from './middleware/LoginMiddleware';
 
 const ComponentGuidePage = lazy(() => import('./pages/guide/common/ComponentGuidePage'));
 const PopupGuidePage = lazy(() => import('./pages/guide/common/PopupGuidePage'));
@@ -28,21 +25,24 @@ const GlobalPopupGuidePage = lazy(
 );
 const SheetGuidePage = lazy(() => import('./pages/guide/common/SheetGuidePage'));
 
+const ChatListPage = lazy(() => import('./pages/main/ChatListPage'));
+const ChatRoomPage = lazy(() => import('./pages/chat/ChatRoomPage'));
+const CreateRoomPage = lazy(() => import('./pages/chat/CreateRoomPage'));
+const RoomSettingsPage = lazy(() => import('./pages/chat/RoomSettingsPage'));
+const InvitePage = lazy(() => import('./pages/chat/InvitePage'));
+
 const router = createBrowserRouter([
 	{
 		element: <MainLayout />,
+		middleware: [AuthMiddleware],
 		children: [
 			{
 				path: '/',
-				element: <HomePage />
-			},
-			{
-				path: '/party',
-				element: <PartyPage />
+				element: <Navigate to="/chat" replace />
 			},
 			{
 				path: '/chat',
-				element: <ChatPage />
+				element: <ChatListPage />
 			},
 			{
 				path: '/my',
@@ -51,8 +51,36 @@ const router = createBrowserRouter([
 		]
 	},
 	{
-		path: '/auth',
+		element: <SubLayout />,
 		middleware: [AuthMiddleware],
+		children: [
+			{
+				path: '/chat/create',
+				element: <CreateRoomPage />
+			},
+			{
+				path: '/chat/:roomId/settings',
+				element: <RoomSettingsPage />
+			},
+			{
+				path: '/chat/:roomId',
+				element: <ChatRoomPage />
+			}
+		]
+	},
+	{
+		element: <CenterLayout />,
+		middleware: [AuthMiddleware],
+		children: [
+			{
+				path: '/invite/:token',
+				element: <InvitePage />
+			}
+		]
+	},
+	{
+		path: '/auth',
+		middleware: [LoginMiddleware],
 		children: [
 			{
 				path: 'login',
@@ -113,16 +141,6 @@ const router = createBrowserRouter([
 						element: <FindPasswordPage />
 					}
 				]
-			}
-		]
-	},
-	{
-		element: <SubLayout />,
-		path: '/party',
-		children: [
-			{
-				path: 'select-schedule',
-				element: <SelectSchedulePage />
 			}
 		]
 	},

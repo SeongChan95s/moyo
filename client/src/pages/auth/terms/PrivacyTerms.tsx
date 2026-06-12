@@ -14,13 +14,13 @@ export default function PrivacyTerms() {
 			<main>
 				<div className="text-body pt-32 pr-18 pl-18">
 					<h3 className="text-[18px] font-bold text-gray-900">
-						모요(Moyo) 개인정보 처리방침
+						Talk 개인정보 처리방침
 					</h3>
 					<div className="mt-21 text-[12px] text-[#272727]">
 						<dl>
 							<dt className="font-bold">제1조 (목적)</dt>
 							<dd>
-								본 약관은 모요(이하 "서비스")가 제공하는 약속 관리 및 일정 공유 서비스의
+								본 약관은 Talk(이하 "서비스")가 제공하는 채팅 서비스의
 								이용 조건 및 절차, 회원과 서비스 제공자의 권리와 의무를 규정합니다.
 							</dd>
 						</dl>
@@ -29,8 +29,7 @@ export default function PrivacyTerms() {
 							<dd>
 								1. 서비스는 광고 수익 기반의 무료 서비스입니다.
 								<br />
-								2. 주요 기능 - 약속(파티) 생성 및 관리 - 참가자 일정 조율 및 최적 시간
-								매칭 - 실시간 계획 공유 및 알림 <br />
+								2. 주요 기능 - 채팅방 생성 및 관리 - 실시간 채팅 - 초대 링크를 통한 멤버 초대 <br />
 								3. 서비스는 24시간 제공을 원칙으로 하나, 시스템 점검이나 장애 시 일시
 								중단될 수 있습니다.
 							</dd>

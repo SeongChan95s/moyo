@@ -1,6 +1,6 @@
-# 모요(Moyo)
+# Talk
 
-> 바쁜 현대인을 위한 스마트한 약속 관리 솔루션
+> 친구들과 실시간으로 대화하는 채팅 서비스
 
 ![React](https://img.shields.io/badge/React-19.2.0-61dafb?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178c6?logo=typescript)
@@ -10,47 +10,30 @@
 
 ## 프로젝트 소개
 
-**모요(Moyo)**는 친구들과의 약속을 더 쉽고 빠르게 잡을 수 있도록 돕는 PWA 기반 웹 어플리케이션입니다.
-
-### 개요
-
-바쁜 일상 속에서 친구들과 시간을 맞추는 것은 여간 번거로운 일이 아닙니다.
-
-- "이번 주말 언제 시간 돼?"
-- "나는 토요일 오후 2시 이후만 가능해"
-- "그럼 일요일은 어때?"
-
-이런 대화가 반복되면서 약속 하나 잡는 데 며칠이 걸리기도 합니다.
-
-**모요(Moyo)**는 MBTI J인 계획형 사람들을 위한 최적의 서비스로, 친구들의 약속 가능한 시간을 한눈에 확인하고 최적의 시간을 찾아줍니다. 약속이 결정된 후에도 실시간으로 계획을 공유하고 관리하여 약속을 성공적으로 성사시킬 수 있습니다.
+**Talk**는 채팅방을 만들고 친구들을 초대해 실시간으로 대화할 수 있는 PWA 기반 웹 채팅 서비스입니다.
 
 ---
 
 ## 주요 기능
 
-### 1. 다양한 약속 유형 지원
+### 1. 회원제
+비회원의 첫 화면은 무조건 로그인 화면입니다. 로그인 후 서비스를 이용할 수 있습니다.
 
-액티비티, 핫플 탐방, 게임, 식사 등 다양한 종류의 약속을 생성하고 관리할 수 있습니다.
+### 2. 실시간 채팅
+- 채팅방 생성 및 참여
+- Firestore `onSnapshot` 기반 실시간 메시지 수신
+- 읽음 상태 추적
 
-### 2. 스마트 일정 매칭
+### 3. 초대
+- 채팅방 멤버를 직접 초대
+- 유효기간 있는 초대 URL 생성 및 공유
 
-- **30분 단위** 시간 선택으로 정밀한 일정 조율
-- 참가자 모두의 가능한 시간대를 **시각적으로 표시**
-- 공통 가능 시간대를 **자동으로 하이라이트**
-- 최적의 약속 시간을 빠르게 결정
-
-### 3. 실시간 계획 공유
-
-- 확정된 약속의 **일정, 장소, 세부 내용** 실시간 공유
-- 공지 혹은 계획 변경 시 참가자 전원에게 **즉시 알림**
-- 약속 당일까지 **리마인드 알림**
-- 모바일 푸시 알림 지원 (PWA)
-
-### 4. 의사결정 도구
-
-- 일정, 장소, 계획에 대한 **투표 기능**
-- 약속을 간단하게 **공유**
-- 참가자 응답 현황 **실시간 트래킹**
+### 4. 채팅방 관리 (매니저 전용)
+- 채팅방 제목 변경
+- 공개/비공개 설정
+- 일반 멤버의 초대 권한 설정
+- 멤버 추방
+- 채팅방 삭제
 
 ---
 
@@ -70,31 +53,26 @@
 
 ### State Management & Data Fetching
 
-- **Zustand** - 경량 상태 관리
-- **TanStack Query** - 서버 상태 관리
+- **Zustand** - 경량 상태 관리 (실시간 메시지 스트림)
+- **TanStack Query** - 서버 상태 관리 (채팅방 목록, 멤버 조회 등)
 
 ### Backend & Database
 
 - **Firebase** - 인증, 데이터베이스, 호스팅
-  - Authentication (이메일/비밀번호, 소셜 로그인)
-  - Cloud Firestore (실시간 데이터베이스)
+  - Authentication (이메일/비밀번호, 카카오, 네이버 소셜 로그인)
+  - Cloud Firestore
+- **Express (Cloud Run)** - 카카오/네이버 OAuth 토큰 교환 서버
 
 ### Form & Validation
 
 - **React Hook Form** - 폼 관리
 - **Zod** - 스키마 검증
 
-### UI Libraries
-
-- **Swiper** - 모바일 터치 슬라이더
-- **React Transition Group** - 애니메이션 전환
-
 ### PWA
 
 - **Vite Plugin PWA** - PWA 통합
 - **Service Worker** - 오프라인 지원
 - **Web App Manifest** - 앱 같은 경험
-- **Push Notifications** - 실시간 알림 (예정)
 
 ### Development Tools
 
@@ -105,46 +83,64 @@
 
 ---
 
+## Firestore 컬렉션 구조
+
+```
+rooms/                         # 채팅방
+  {roomId}/
+    members/                   # 멤버 (문서 ID = uid)
+    messages/                  # 메시지
+    readStatus/                # 읽음 상태 (문서 ID = uid)
+
+inviteLinks/                   # 초대 링크 (토큰 기반, 유효기간 있음)
+users/                         # 사용자 정보
+```
+
+---
+
 ## 프로젝트 구조
 
 ```
-party-scheduler/
-├── public/                  # 정적 파일
-└── src/
-    ├── assets/             # 정적 리소스
-    │   ├── fonts/          # 폰트 파일
-    │   ├── icons/          # SVG 아이콘
-    │   └── styles/         # 스타일
-    ├── components/         # 컴포넌트
-    ├── constants/          # 상수
-    ├── hooks/              # 훅
-    ├── layouts/            # 레이아웃
-    ├── lib/                # 외부 라이브러리 설정
-    ├── pages/              # 페이지
-    ├── providers/          # providers
-    ├── schemas/            # 스키마
-    ├── services/           # API
-    ├── types/              # 타입 정의
-    ├── utils/              # 유틸 함수
-    ├── main.tsx            # 앱 진입점
-    ├── router.tsx          # 라우터 설정
-    └── Wrapper.tsx         # 앱 래퍼
+talk/
+├── client/                    # React Frontend
+│   └── src/
+│       ├── assets/            # 폰트, SVG 아이콘, SCSS 스타일
+│       ├── components/
+│       │   ├── chat/          # 채팅 전용 컴포넌트
+│       │   ├── common/        # 공통 UI 컴포넌트 라이브러리
+│       │   └── global/        # 전역 컴포넌트 (NavBar, Toast 등)
+│       ├── hooks/
+│       │   ├── chat/          # 채팅 훅 (useRooms, useMessages 등)
+│       │   └── auth/          # 인증 훅
+│       ├── layouts/           # 레이아웃 컴포넌트
+│       ├── lib/               # Firebase 설정
+│       ├── pages/
+│       │   ├── chat/          # 채팅 페이지
+│       │   ├── main/          # 메인 페이지
+│       │   └── auth/          # 인증 페이지
+│       ├── services/
+│       │   ├── chat/          # 채팅 서비스 (roomsService 등)
+│       │   └── firebase/      # Firestore CRUD 유틸
+│       ├── types/             # TypeScript 타입 정의
+│       ├── router.tsx
+│       └── main.tsx
+└── server/                    # Express Backend (Cloud Run)
+    └── src/
+        └── routes/auth.ts     # 카카오/네이버 OAuth 토큰 교환
 ```
 
-## 시작하기
+---
 
-이 프로젝트는 클라이언트(React)와 서버(Express)로 구성되어 있습니다. 원활한 실행을 위해 두 환경 모두 설정해야 합니다.
+## 시작하기
 
 ### 사전 요구사항
 
 - Node.js v22.12.0 이상
-- npm
 - Firebase 프로젝트 (Firestore, Authentication 사용)
 
 ### 1단계: 환경 변수 설정
 
-프로젝트 루트의 각 폴더에 `.env` 파일을 생성해야 합니다.
-`client/.env` 및 `server/.env` (없다면 생성 필요)를 참고하여 각 키에 맞는 값을 채워넣으세요.
+`client/.env` 및 `server/.env`를 참고하여 각 키에 맞는 값을 채워넣으세요.
 
 ### 2단계: 설치 및 실행
 
@@ -161,26 +157,22 @@ npm run dev
 **터미널 2: 클라이언트 (Frontend)**
 ```bash
 cd client
-npm install --legacy-peer
+npm install
 npm run dev
 ```
 > 클라이언트가 `http://localhost:3000` 에서 실행됩니다.
 
-### 3단계: 배포 (Deployment)
-
-이 프로젝트는 **Frontend(Firebase Hosting)**와 **Backend(Cloud Run)**가 분리되어 배포되지만, Rewrite 설정을 통해 **단일 도메인**으로 동작합니다.
+### 3단계: 배포
 
 **서버 배포 (Cloud Run)**
 ```bash
-# server 폴더에서 실행
+cd server
 npm run deploy
 ```
-> `.env` 파일을 기반으로 환경 변수가 자동 설정되어 배포됩니다.
 
 **클라이언트 배포 (Firebase Hosting)**
 ```bash
 # client 폴더에서
-# 주의: .env.production 파일의 VITE_SERVER_URL은 비워두어야 합니다.
 npm run build
 
 # 프로젝트 루트에서
@@ -188,38 +180,6 @@ firebase deploy
 ```
 
 ---
-
-## 주요 기술 특징
-
-### 🎨 디자인 시스템
-
-- **Tailwind CSS 4.1** + **SCSS 모듈**의 하이브리드 스타일링
-- SCSS 변수, 믹스인, 함수가 전역으로 자동 임포트
-- CSS 모듈과 camelCase 네이밍 컨벤션
-- 일관된 디자인 토큰 시스템
-
-### ⚡ 성능 최적화
-
-- **React 19 Compiler** - 자동 메모이제이션
-- **Vite** - 빠른 번들링
-- **Code Splitting** - 동적 임포트
-- **SVG 컴포넌트화** - SVGR을 통한 아이콘 최적화
-
-### 🔒 타입 안전성
-
-- **TypeScript 5.8** - 엄격한 타입 체크
-- **Zod** - 런타임 스키마 검증
-- **React Hook Form** - 타입 안전한 폼 관리
-
-### 📱 PWA 기능
-
-- **빠른 로딩** - 프리캐싱 전략
-- **푸시 알림** - 실시간 업데이트
-
-### 🔥 Firebase 통합
-
-- **Authentication** - 이메일/소셜 로그인
-- **Cloud Firestore** - 실시간 NoSQL 데이터베이스
 
 ## 개발 가이드
 
@@ -237,53 +197,54 @@ npx tsc --noEmit
 
 ### 아이콘 추가
 
-1. SVG 파일을 client\src\assets\icons 에 추가한다.
-2. React 컴포넌트로 변환한다.
+1. SVG 파일을 `client/src/assets/icons`에 추가합니다.
+2. React 컴포넌트로 변환합니다.
 ```bash
 npm run svgr
 ```
 
 ### 네이밍
 
-| 항목                     | 네이밍 규칙                    |
-| ------------------------ | ------------------------------ |
-| 컴포넌트명               | PascalCase                     |
-| 컴포넌트가 포함된 폴더명 | PascalCase                     |
-| 변수, 함수, 훅           | camelCase                      |
-| 아이디, 클래스명         | camelCase                      |
-| 에셋                     | snake_case                     |
-| 아이콘                   | icon_아이콘명_바리에이션_컬러 |
-| 타입명                   | PascalCase                     |
+| 항목 | 네이밍 규칙 |
+| --- | --- |
+| 컴포넌트명 | PascalCase |
+| 컴포넌트가 포함된 폴더명 | PascalCase |
+| 변수, 함수, 훅 | camelCase |
+| 아이디, 클래스명 | camelCase |
+| 에셋 | snake_case |
+| 아이콘 | icon_아이콘명_바리에이션_컬러 |
+| 타입명 | PascalCase |
 
 ### 컴포넌트 개발
 
-프로젝트는 재사용 가능한 컴포넌트 라이브러리를 포함하고 있습니다.
+재사용 가능한 공통 컴포넌트 라이브러리를 포함하고 있습니다.
 가이드 페이지(`/guide/*`)에서 각 컴포넌트의 사용법을 확인할 수 있습니다.
 
 ### 스타일링 규칙
 
-- **전역 SCSS**: `src/assets/styles/abstracts/`의 변수, 믹스인, 함수는 개별적으로 불러오지 않아도 자동으로 사용
-- **컴포넌트 SCSS 모듈 / tailwind css**: common 공통 컴포넌트는 SCSS MODULE, 그 외에는 가급적 tailwind css를 사용한다.
+- **전역 SCSS**: `src/assets/styles/abstracts/`의 변수, 믹스인, 함수는 자동으로 사용 가능
+- **컴포넌트 스타일**: 공통 컴포넌트는 SCSS Module, 그 외에는 Tailwind CSS 사용
 - **인라인 스타일 지양**: 불가피한 경우를 제외하고 피할 것
 
 #### z-index
 
-| 분류           | z   |
-| -------------- | --- |
-| Alert, Tooltip | 90  |
-| Sheet          | 80  |
-| NavBar, AppBar | 60  |
-| FAB            | 50  |
+| 분류 | z |
+| --- | --- |
+| Alert, Tooltip | 90 |
+| Sheet | 80 |
+| NavBar, AppBar | 60 |
+| FAB | 50 |
 
 ### 타이포그래피
 
-| h1  | 로고     |
-| --- | -------- |
-| h2  | 페이지명 |
-| h3  | 섹션명   |
-| h4  | 아티클명 |
-| h5  | 상품명   |
-| h6  | 기타     |
+| 태그 | 용도 |
+| --- | --- |
+| h1 | 로고 |
+| h2 | 페이지명 |
+| h3 | 섹션명 |
+| h4 | 아티클명 |
+| h5 | 상품명 |
+| h6 | 기타 |
 
 ---
 
@@ -295,8 +256,8 @@ seongchan95s@gmail.com
 
 <div align="center">
 
-**Party Scheduler** - 약속을 더 쉽게, 더 즐겁게
+**Talk** - 언제 어디서나 편하게 대화하세요
 
-[Back to Top](#파티-스케줄러party-scheduler)
+[Back to Top](#talk)
 
 </div>

@@ -10,56 +10,67 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
-    function isPartyMember(partyId) {
-      return exists(/databases/$(database)/documents/parties/$(partyId)/members/$(request.auth.uid));
+    function isRoomMember(roomId) {
+      return exists(/databases/$(database)/documents/rooms/$(roomId)/members/$(request.auth.uid));
     }
 
-    function isPartyManager(partyId) {
-      let party = get(/databases/$(database)/documents/parties/$(partyId)).data;
-      return (
-        request.auth.uid in party.managerIds || 
-        request.auth.uid == party.creatorId
-      );
+    function isRoomManager(roomId) {
+      let room = get(/databases/$(database)/documents/rooms/$(roomId)).data;
+      return request.auth.uid in room.managerIds;
+    }
+
+    function canInvite(roomId) {
+      let room = get(/databases/$(database)/documents/rooms/$(roomId)).data;
+      return isRoomManager(roomId) ||
+             (room.allowMemberInvite == true && isRoomMember(roomId));
     }
 
     match /{all=**} {
-      allow read: if isAdmin();
-      allow write: if isAdmin();
+      allow read, write: if isAdmin();
     }
 
     match /users/{userId} {
-      allow read: if true;
+      allow read: if isAuth();
       allow create: if request.auth.uid == userId;
       allow update: if request.auth.uid == userId;
       allow delete: if isAdmin();
     }
 
-    match /parties/{partyId} {
+    match /rooms/{roomId} {
+      allow read: if isAuth() && (!resource.data.isPrivate || isRoomMember(roomId));
+      allow create: if isAuth();
+      allow update: if isRoomManager(roomId);
+      allow delete: if isRoomManager(roomId);
+
+      match /members/{memberId} {
+        allow read: if isRoomMember(roomId);
+        allow create: if canInvite(roomId) || request.auth.uid == memberId;
+        allow delete: if isRoomManager(roomId) || request.auth.uid == memberId;
+      }
+
+      match /messages/{messageId} {
+        allow read: if isRoomMember(roomId);
+        allow create: if isRoomMember(roomId)
+                      && request.resource.data.senderId == request.auth.uid;
+        allow update, delete: if false;
+      }
+
+      match /readStatus/{userId} {
+        allow read: if isRoomMember(roomId);
+        allow write: if request.auth.uid == userId && isRoomMember(roomId);
+      }
+    }
+
+    // collectionGroup 쿼리 지원 (내 채팅방 목록 조회)
+    match /{path=**}/members/{memberId} {
+      allow read: if isAuth() && resource.data.uid == request.auth.uid;
+    }
+
+    match /inviteLinks/{linkId} {
       allow read: if true;
       allow create: if isAuth();
-      allow update: if isPartyManager();
-      allow delete: if request.auth.uid == resource.data.creatorId;
-
-      match /plans/{planId} {
-        allow read: if true;
-        allow write: if isPartyManager(partyId);
-
-        match /timeSlots/{docs} {
-          allow read: if isPartyMember();
-          allow write: if request.auth.uid == resource.data.id;
-        }
-      }
-      
-      match /members/{memberId} {
-        allow read: if true;
-        allow write: if isPartyManager(partyId);
-      }
-
-      match /polls/{pollId} {
-        allow read: if true;
-        allow create: if isPartyMember(partyId);
-        allow delete: if request.auth.uid == resource.data.creatorId;
-      }
+      allow update: if false;
+      allow delete: if isAuth() && resource.data.createdBy == request.auth.uid;
     }
   }
 }

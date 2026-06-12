@@ -131,6 +131,8 @@
 		width: 100%;
 	}
 	.disabled {
+		pointer-events: none;
+
 		&.filled {
 			color: var(--color-gray-300);
 			background-color: var(--color-gray-100);

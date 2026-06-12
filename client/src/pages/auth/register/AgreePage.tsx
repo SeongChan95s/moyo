@@ -32,7 +32,7 @@ export default function AgreePage() {
 				<form>
 					<div className="title-box mt-25 pr-18 pl-18">
 						<h3 className="text-[18px] font-bold text-gray-900">
-							모요 서비스 이용을 위해 동의가 필요해요.
+							Talk 서비스 이용을 위해 동의가 필요해요.
 						</h3>
 						<p className="mt-11 text-[14px] text-[#272727]">
 							본인확인 및 본인 인증을 위한 이메일 인증

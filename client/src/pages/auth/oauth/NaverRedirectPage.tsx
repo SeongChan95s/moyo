@@ -22,19 +22,19 @@ export default function NaverRedirectPage() {
 					code,
 					clientId: import.meta.env.VITE_NAVER_CLIENT_ID,
 					clientSecret: import.meta.env.VITE_NAVER_CLIENT_SECRET,
-					redirectUri: import.meta.env.VITE_NAVER_REDIRECT_URI
+					redirectUri: `${import.meta.env.VITE_CLIENT_URL}/auth/oauth/naver/callback`
 				}
 			);
 
-			const { customToken, user: userData } = response.data;
+			const { customToken, user: userData, isNewUser } = response.data.data;
 
 			const authResult = await signInWithCustomToken(getAuth(), customToken);
 			const user = authResult.user;
 
-			if (userData) {
+			if (isNewUser && userData) {
 				await updateProfile(user, {
-					displayName: userData.nickname || user.displayName || 'NaverUser',
-					photoURL: userData.profile_image || user.photoURL
+					displayName: userData.nickname || 'NaverUser',
+					photoURL: userData.profile_image || null
 				});
 			}
 

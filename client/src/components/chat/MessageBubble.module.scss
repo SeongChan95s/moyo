@@ -1,0 +1,52 @@
+.bubble {
+	display: flex;
+	flex-direction: column;
+	max-width: 70%;
+	margin-bottom: 0.5rem;
+
+	&.me {
+		align-self: flex-end;
+		align-items: flex-end;
+
+		.content {
+			background-color: var(--color-primary);
+			color: #fff;
+			border-radius: 1rem 1rem 0.25rem 1rem;
+		}
+	}
+
+	&.other {
+		align-self: flex-start;
+		align-items: flex-start;
+
+		.content {
+			background-color: var(--color-gray-100);
+			color: var(--color-gray-900);
+			border-radius: 1rem 1rem 1rem 0.25rem;
+		}
+	}
+}
+
+.senderName {
+	font-size: 0.75rem;
+	color: var(--color-gray-500);
+	margin-bottom: 0.25rem;
+	padding-left: 0.25rem;
+}
+
+.content {
+	padding: 0.5rem 0.75rem;
+	font-size: 0.9375rem;
+	line-height: 1.5;
+	word-break: break-word;
+}
+
+.system {
+	align-self: center;
+	font-size: 0.75rem;
+	color: var(--color-gray-400);
+	background-color: var(--color-gray-100);
+	border-radius: 0.75rem;
+	padding: 0.25rem 0.75rem;
+	margin: 0.5rem 0;
+}

@@ -3,6 +3,7 @@ import { Button } from '../../components/common/Button';
 import { getAuth, signOut } from 'firebase/auth';
 import { useUserState } from '../../hooks/auth/useUserStateChanged';
 import { useLogin } from '@/hooks/auth/useLogin';
+import { IconPersonFilled } from '@/components/common/Icon';
 
 export default function MyPage() {
 	const login = useLogin();
@@ -18,20 +19,39 @@ export default function MyPage() {
 	return (
 		<>
 			<Helmet>
-				<title>모요(Moyo) - 마이</title>
+				<title>Talk - 마이</title>
 			</Helmet>
 			<div className="my-page">
-				{user && data && (
-					<p>
-						{user.displayName} #{data.tag} 님 로그인을 환영합니다.
-					</p>
-				)}
+				<main className="my-page-main">
+					<h2 className="hidden">마이 페이지</h2>
+					<header className="my-page-header bg-gray-200">
+						<div className="profile flex inner gap-8">
+							<div className="thumbnail w-50 h-50 p-4">
+								<div className="thumbnail-container w-full h-full rounded-full bg-gray-400">
+									{user?.photoURL ? (
+										<img src={user.photoURL} alt="" />
+									) : (
+										<div className="empty flex justify-center items-center w-full h-full">
+											<IconPersonFilled className="text-gray-200" />
+										</div>
+									)}
+								</div>
+							</div>
 
-				{user ? (
-					<Button onClick={logout}>로그아웃</Button>
-				) : (
-					<Button onClick={login}>로그인</Button>
-				)}
+							{user && data && (
+								<p>
+									{user.displayName} #{data.tag} 님 로그인을 환영합니다.
+								</p>
+							)}
+						</div>
+					</header>
+
+					{user ? (
+						<Button onClick={logout}>로그아웃</Button>
+					) : (
+						<Button onClick={login}>로그인</Button>
+					)}
+				</main>
 			</div>
 		</>
 	);

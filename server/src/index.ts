@@ -4,6 +4,7 @@ import admin from 'firebase-admin';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import authRouter from './routes/auth.js';
+import userRouter from './routes/user.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -22,12 +23,13 @@ admin.initializeApp({
 });
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 
 app.get('/health', (_req: Request, res: Response) => {
 	res.json({ status: 'ok', timestamp: new Date().toISOString() });

@@ -55,7 +55,9 @@
 		}
 		.container {
 			gap: 0.25rem;
-			padding: 0.625rem 0.75rem;
+			input {
+				padding: 0.625rem 0.75rem;
+			}
 			&:has(input) {
 				height: 2.5rem;
 			}
@@ -70,7 +72,9 @@
 		}
 		.container {
 			gap: 0.375rem;
-			padding: 0.75rem 0.875rem;
+			input {
+				padding: 0.75rem 0.875rem;
+			}
 			&:has(input) {
 				height: 2.75rem;
 			}
@@ -84,7 +88,9 @@
 			font-size: 0.875rem;
 		}
 		.container {
-			padding: 0px 18px;
+			input {
+				padding: 0px 18px;
+			}
 			&:has(input) {
 				height: 2.875rem;
 			}

@@ -10,7 +10,7 @@
 			{
 				"source": "/api/**",
 				"run": {
-					"serviceId": "moyo-server",
+					"serviceId": "talk-server",
 					"region": "asia-northeast3"
 				}
 			},

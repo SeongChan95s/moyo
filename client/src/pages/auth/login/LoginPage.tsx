@@ -26,7 +26,7 @@ export default function LoginPage() {
 			<main className="login-page flex-1 flex justify-center items-center">
 				<div className="login-container w-full pr-25 pl-25">
 					<div className="logo w-120 mr-auto ml-auto">
-						<img src="https://firebasestorage.googleapis.com/v0/b/party-scheduler-90227.firebasestorage.app/o/common%2Flogo.svg?alt=media&token=86e5a1ba-da28-4f51-94cb-838c76356dc7" />
+						<img src="/logo.svg" />
 					</div>
 
 					<div className="main-container mt-80">

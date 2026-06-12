@@ -1,10 +1,6 @@
 import {
-	IconHomeFilled,
-	IconHomeOutlined,
 	IconPersonFilled,
 	IconPersonOutlined,
-	IconStarFilled,
-	IconStarOutlined,
 	IconTalkFilled,
 	IconTalkOutlined
 } from '../../common/Icon';
@@ -18,25 +14,9 @@ export default function TabBar() {
 
 	const TabBarProps = [
 		{
-			label: '홈',
-			href: '/',
-			exact: true,
-			icons: {
-				normal: <IconHomeOutlined size="fill" />,
-				activated: <IconHomeFilled size="fill" />
-			}
-		},
-		{
-			label: '파티',
-			href: '/party',
-			icons: {
-				normal: <IconStarOutlined size="fill" />,
-				activated: <IconStarFilled size="fill" />
-			}
-		},
-		{
 			label: '채팅',
 			href: '/chat',
+			exact: true,
 			icons: {
 				normal: <IconTalkOutlined size="fill" />,
 				activated: <IconTalkFilled size="fill" />

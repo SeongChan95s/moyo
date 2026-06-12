@@ -16,7 +16,6 @@ export type CredentialProvider = 'kakao' | 'naver' | 'google' | 'x' | 'email';
 export interface UserNotificationSet {
 	all: Boolean;
 	invited: Boolean;
-	party: Boolean;
 	board: Boolean;
 	comment: Boolean;
 	service: Boolean;

@@ -10,7 +10,6 @@ import { TextField } from '@/components/common/TextField';
 import { loginInputSchema } from '@/schemas/auth';
 import { loginWithEmail } from '@/services/auth/loginWithEmail';
 import { FirebaseError } from 'firebase/app';
-import { handleFirebaseAuthErrorMessage } from '@/utils/auth';
 import { Spinner } from '@/components/common/Spinner';
 
 export default function EmailLoginPage() {
@@ -19,8 +18,7 @@ export default function EmailLoginPage() {
 
 	const {
 		register,
-		formState: { errors, isSubmitting, isValid },
-		setError,
+		formState: { isSubmitting, isValid },
 		handleSubmit
 	} = useForm<LoginInput>({
 		resolver: zodResolver(loginInputSchema)
@@ -36,21 +34,9 @@ export default function EmailLoginPage() {
 			navigate(callbackStorage.get() ?? '/');
 		} catch (error) {
 			if (error instanceof FirebaseError) {
-				if (error.code == 'auth/user-not-found') {
-					setError('email', {
-						message: handleFirebaseAuthErrorMessage(error)
-					});
-				}
-
-				if (error.code == 'auth/wrong-password') {
-					setError('password', {
-						message: handleFirebaseAuthErrorMessage(error)
-					});
-				}
-
-				// useGlobalToastStore.getState().push({
-				// 	message: handleFirebaseAuthErrorMessage(error)
-				// });
+				useGlobalToastStore.getState().push({
+					message: '이메일 혹은 비밀번호가 일치하지 않습니다.'
+				});
 			}
 			if (error instanceof Error) throw error;
 		}
@@ -69,7 +55,6 @@ export default function EmailLoginPage() {
 								label="이메일"
 								placeholder="이메일을 입력해 주세요."
 								size="lg"
-								error={errors.email?.message}
 								{...register('email')}
 								fill
 							/>
@@ -81,7 +66,6 @@ export default function EmailLoginPage() {
 								placeholder="8자 이상의 비밀번호"
 								size="lg"
 								{...register('password')}
-								error={errors.password?.message}
 								fill
 							/>
 						</li>

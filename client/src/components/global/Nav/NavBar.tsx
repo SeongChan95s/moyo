@@ -1,4 +1,9 @@
-import { IconArrowStick, IconHomeFilled, IconNotifyOutlined } from '../../common/Icon';
+import {
+	IconArrowStick,
+	IconHomeFilled,
+	IconNotifyOutlined,
+	IconSettingOutlined
+} from '../../common/Icon';
 import { IconButton } from '../../common/IconButton';
 import { useRef, useEffect, useState, startTransition } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -15,6 +20,7 @@ interface NavBarProps {
 	search?: boolean;
 	darkMode?: boolean;
 	notify?: boolean;
+	setting?: boolean;
 	action?: React.ReactNode;
 }
 
@@ -37,30 +43,27 @@ const initialNavBarProps: NavBarProps = {
 	search: false,
 	darkMode: false,
 	notify: false,
+	setting: false,
 	action: undefined
 };
 
 const pathMap: PathMap[] = [
 	{
-		path: '/',
+		path: '/chat',
 		props: { logo: true, notify: true },
 		exact: true
 	},
 	{
-		path: '/party',
-		props: { logo: true, notify: true }
-	},
-	{
-		path: '/detail',
+		path: '/chat/',
 		props: { title: true, back: true }
 	},
 	{
-		path: '/chat',
-		props: { logo: true, notify: true }
+		path: '/invite',
+		props: { title: true, back: true }
 	},
 	{
 		path: '/my',
-		props: { logo: true, notify: true }
+		props: { logo: true, notify: true, setting: true }
 	},
 	{
 		path: '/auth',
@@ -85,7 +88,7 @@ function useNavPath() {
 					);
 					const currentTitle = document.title;
 					if (result?.props?.title)
-						result.props.title = currentTitle.replace('파티 스케줄러 :', '');
+						result.props.title = currentTitle.replace('Talk -', '');
 
 					return result ? { ...result } : undefined;
 				});
@@ -147,7 +150,7 @@ export default function NavBar() {
 
 						{navBarProps.logo && (
 							<h1 className={styles.logo} onClick={() => navigate('/')}>
-								<img src="/favicon.png" />
+								<img src="/logo.svg" />
 							</h1>
 						)}
 
@@ -165,19 +168,16 @@ export default function NavBar() {
 						)}
 					</div>
 
-					{navBarProps.darkMode ||
-						navBarProps.notify ||
-						(navBarProps.home && (
-							<div className={styles.quickMenu}>
-								{navBarProps.home && <IconButton size="lg" icon={<IconHomeFilled />} />}
-								{navBarProps.notify && (
-									<IconButton size="lg" icon={<IconNotifyOutlined />} />
-								)}
-								{navBarProps.darkMode && (
-									<IconButton size="lg" icon={<IconNotifyOutlined />} />
-								)}
-							</div>
-						))}
+					<div className={styles.quickMenu}>
+						{navBarProps.home && <IconButton size="lg" icon={<IconHomeFilled />} />}
+						{navBarProps.notify && <IconButton size="lg" icon={<IconNotifyOutlined />} />}
+						{navBarProps.darkMode && (
+							<IconButton size="lg" icon={<IconNotifyOutlined />} />
+						)}
+						{navBarProps.setting && (
+							<IconButton size="lg" icon={<IconSettingOutlined />} />
+						)}
+					</div>
 				</nav>
 			</div>
 		</header>

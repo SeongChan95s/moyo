@@ -22,11 +22,11 @@ export default function KakaoRedirectPage() {
 					code,
 					clientId: import.meta.env.VITE_KAKAO_REST_API_KEY,
 					clientSecret: import.meta.env.VITE_KAKAO_CLIENT_SECRET,
-					redirectUri: import.meta.env.VITE_KAKAO_REDIRECT_URI
+					redirectUri: `${import.meta.env.VITE_CLIENT_URL}/auth/oauth/kakao/callback`
 				}
 			);
 
-			const { data: tokenData } = response.data;
+			const tokenData = response.data.data;
 
 			const provider = new OAuthProvider('oidc.kakao');
 			const credential = provider.credential({
